@@ -2,6 +2,8 @@
  * Create a list that holds all of your cards
  */
 let cardList = ['fa-diamond','fa-paper-plane-o','fa-anchor','fa-bolt','fa-cube','fa-anchor','fa-leaf','fa-bicycle'];
+let moves = 0;
+
 const deck = document.createElement('ul');
 deck.classList.add('deck');
 
@@ -66,3 +68,45 @@ function shuffle(array) {
  */
 
 let openCards=[]
+const cards = document.getElementsByClassName('card');
+let f=0,s=0;
+
+for(let i = 0; i < cards.length; i++) {
+    cards[i].addEventListener('click', function(){
+        showCard(i);
+        if(openCards.length<2){
+            pushToOpenList(i)
+        }
+        else if(openCards.length===2){
+            checkCards();   
+        }
+
+    }, false);
+}
+
+function checkCards(){
+    if(openCards[1]===openCards[0]){
+        alert("HH");
+    }
+    else{
+        openCards=[]
+    }
+}
+
+function pushToOpenList(ind){
+    openCards.push(getCardClass(ind));
+}
+
+function showCard(ind){
+    cards[ind].classList.add('open');
+    cards[ind].classList.add('show');
+}
+
+function hideCard(ind){
+    cards[ind].classList.remove('open');
+    cards[ind].classList.remove('show');
+}
+
+function getCardClass(ind){
+    return cards[ind].firstChild.classList[1];
+}
